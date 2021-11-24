@@ -1,5 +1,7 @@
 package com.snoet.plushie;
 
+import com.snoet.plushie.block.Modblocks;
+import com.snoet.plushie.item.ModItems;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -29,6 +31,11 @@ public class Plushie
     public Plushie() {
         // Register the setup method for modloading
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        ModItems.register(eventBus);
+        Modblocks.register(eventBus);
+
+
         eventBus.addListener(this::setup);
         // Register the enqueueIMC method for modloading
 //        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
