@@ -21,7 +21,11 @@ public class Modblocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, Plushie.MOD_ID);
 
     public static final RegistryObject<Block> STUFFING_BLOCK = registerBlock("stuffing_block",
-            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(2f)));
+            () -> new Block(BlockBehaviour
+                    .Properties.of(Material.METAL)
+                    .strength(2f)
+                    .requiresCorrectToolForDrops()
+            ));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
