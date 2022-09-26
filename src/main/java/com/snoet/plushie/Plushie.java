@@ -37,6 +37,7 @@ public class Plushie {
 
         ModItems.register(eventBus);
         Modblocks.register(eventBus);
+        ModEntityTypes.register(eventBus);
 
 
         eventBus.addListener(this::setup);
