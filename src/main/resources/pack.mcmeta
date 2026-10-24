@@ -1,6 +1,7 @@
 {
-    "pack": {
-        "description": "examplemod resources",
-        "pack_format": 7
-    }
+  "pack": {
+    "description": "plushie resources",
+    "max_format": 121,
+    "min_format": 121
+  }
 }

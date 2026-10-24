@@ -1,15 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "building",
   "pattern": [
     "ii",
     "ii"
   ],
   "key": {
-    "i": {
-      "item": "plushie:stuffing"
-    }
+    "i": "plushie:stuffing"
   },
   "result": {
-    "item": "plushie:stuffing_block"
+    "id": "plushie:stuffing_block"
   }
 }

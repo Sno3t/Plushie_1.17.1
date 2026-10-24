@@ -1,36 +1,16 @@
 package com.snoet.plushie.entity.client;
 
-
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-
-import com.snoet.plushie.Plushie;
+import com.geckolib.renderer.GeoEntityRenderer;
 import com.snoet.plushie.entity.custom.ChonkerEntity;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
 
-public class ChonkerRenderer extends GeoEntityRenderer<ChonkerEntity>  {
+public class ChonkerRenderer extends GeoEntityRenderer<ChonkerEntity, LivingEntityRenderState> {
 
     public ChonkerRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new ChonkerModel());
         this.shadowRadius = 0.3f;
-    }
-
-    @Override
-    public ResourceLocation getTextureLocation(ChonkerEntity instance) {
-        return new ResourceLocation(Plushie.MOD_ID, "textures/entity/chonker/chonker.png");
-    }
-
-    @Override
-    public RenderType getRenderType(ChonkerEntity animatable, float partialTicks, PoseStack stack,
-                                    MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
-                                    ResourceLocation textureLocation) {
-        stack.scale(0.8F, 0.8F, 0.8F);
-        return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
+        withScale(0.8f);
     }
 }

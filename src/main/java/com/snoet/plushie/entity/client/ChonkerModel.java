@@ -1,24 +1,15 @@
 package com.snoet.plushie.entity.client;
 
+import com.geckolib.model.DefaultedEntityGeoModel;
 import com.snoet.plushie.Plushie;
 import com.snoet.plushie.entity.custom.ChonkerEntity;
-import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import net.minecraft.resources.Identifier;
 
-public class ChonkerModel extends AnimatedGeoModel<ChonkerEntity> {
+// Loads geckolib/models/entity/chonker.geo.json, geckolib/animations/entity/chonker.animation.json
+// and textures/entity/chonker.png
+public class ChonkerModel extends DefaultedEntityGeoModel<ChonkerEntity> {
 
-    @Override
-    public ResourceLocation getModelLocation(ChonkerEntity object) {
-        return new ResourceLocation(Plushie.MOD_ID, "geo/chonker.geo.json");
-    }
-
-    @Override
-    public ResourceLocation getTextureLocation(ChonkerEntity object) {
-        return new ResourceLocation(Plushie.MOD_ID, "textures/entity/chonker/chonker.png");
-    }
-
-    @Override
-    public ResourceLocation getAnimationFileLocation(ChonkerEntity animatable) {
-        return new ResourceLocation(Plushie.MOD_ID, "animations/chonker_base.animation.json");
+    public ChonkerModel() {
+        super(Identifier.fromNamespaceAndPath(Plushie.MOD_ID, "chonker"));
     }
 }

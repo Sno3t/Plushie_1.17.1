@@ -1,5 +1,13 @@
 package com.snoet.plushie.entity.custom;
 
+import com.geckolib.animatable.GeoEntity;
+import com.geckolib.animatable.instance.AnimatableInstanceCache;
+import com.geckolib.animatable.manager.AnimatableManager;
+import com.geckolib.animation.AnimationController;
+import com.geckolib.animation.RawAnimation;
+import com.geckolib.animation.object.PlayState;
+import com.geckolib.animation.state.AnimationTest;
+import com.geckolib.util.GeckoLibUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -12,26 +20,25 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.feline.CatSoundVariants;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class ChonkerEntity extends Animal implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
+public class ChonkerEntity extends Animal implements GeoEntity {
+    // "Moving" is the only animation in chonker.animation.json; when standing still the model just rests
+    private static final RawAnimation WALK = RawAnimation.begin().thenLoop("Moving");
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public ChonkerEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
     }
 
+    @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, new PanicGoal(this, 1.25D));
@@ -47,8 +54,13 @@ public class ChonkerEntity extends Animal implements IAnimatable {
         return null;
     }
 
+    @Override
+    public boolean isFood(ItemStack itemStack) {
+        return false;
+    }
+
     public static AttributeSupplier setAttributes() {
-        return Animal.createMobAttributes()
+        return Animal.createAnimalAttributes()
                 .add(Attributes.MAX_HEALTH, 10)
 //                .add(Attributes.ATTACK_DAMAGE, 1.0f)
 //                .add(Attributes.ATTACK_SPEED, 2.0f)
@@ -56,43 +68,45 @@ public class ChonkerEntity extends Animal implements IAnimatable {
                 .build();
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("chonker_base.animation_walk", true));
-            return PlayState.CONTINUE;
+    private PlayState predicate(AnimationTest<ChonkerEntity> test) {
+        if (test.isMoving()) {
+            return test.setAndContinue(WALK);
         }
 
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("chonker_base.animation_idle", true));
-        return PlayState.CONTINUE;
+        return PlayState.STOP;
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>("controller", 0, this::predicate));
     }
 
     @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
     }
 
+    @Override
     protected void playStepSound(BlockPos pos, BlockState blockIn) {
         this.playSound(SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, 0.15F, 1.0F);
     }
 
+    @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.CAT_STRAY_AMBIENT;
+        return SoundEvents.CAT_SOUNDS.get(CatSoundVariants.SoundSet.CLASSIC).adultSounds().strayAmbientSound().value();
     }
 
+    @Override
     protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
         return SoundEvents.DOLPHIN_HURT;
     }
 
+    @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.DOLPHIN_DEATH;
     }
 
+    @Override
     protected float getSoundVolume() {
         return 0.2F;
     }

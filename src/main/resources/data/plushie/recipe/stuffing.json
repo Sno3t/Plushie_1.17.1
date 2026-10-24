@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "plushie:stuffing_block"
+  ],
+  "result": {
+    "id": "plushie:stuffing",
+    "count": 4
+  }
+}
