@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "plushie:item/chonker_spawn_egg"
+    "layer0": "plushie:item/iku_spawn_egg"
   }
 }

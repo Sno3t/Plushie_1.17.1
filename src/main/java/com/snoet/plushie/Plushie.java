@@ -2,7 +2,7 @@ package com.snoet.plushie;
 
 import com.snoet.plushie.block.Modblocks;
 import com.snoet.plushie.entity.ModEntityTypes;
-import com.snoet.plushie.entity.custom.ChonkerEntity;
+import com.snoet.plushie.entity.custom.SukusukuEntity;
 import com.snoet.plushie.item.ModCreativeModeTab;
 import com.snoet.plushie.item.ModItems;
 import net.neoforged.bus.api.IEventBus;
@@ -24,6 +24,7 @@ public final class Plushie {
     }
 
     private static void entityAttributeEvent(EntityAttributeCreationEvent event) {
-        event.put(ModEntityTypes.CHONKER.get(), ChonkerEntity.setAttributes());
+        event.put(ModEntityTypes.IKU.get(), SukusukuEntity.setAttributes());
+        event.put(ModEntityTypes.RAN.get(), SukusukuEntity.setAttributes());
     }
 }

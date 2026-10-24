@@ -21,9 +21,12 @@ public class ModItems {
             .fireResistant()
     );
 
-    // Entity types are registered before items, so CHONKER is already available here
-    public static final DeferredItem<SpawnEggItem> CHONKER_SPAWN_EGG = ITEMS.registerItem("chonker_spawn_egg",
-            SpawnEggItem::new, properties -> properties.spawnEgg(ModEntityTypes.CHONKER.get()));
+    // Entity types are registered before items, so the entity types are already available here
+    public static final DeferredItem<SpawnEggItem> IKU_SPAWN_EGG = ITEMS.registerItem("iku_spawn_egg",
+            SpawnEggItem::new, properties -> properties.spawnEgg(ModEntityTypes.IKU.get()));
+
+    public static final DeferredItem<SpawnEggItem> RAN_SPAWN_EGG = ITEMS.registerItem("ran_spawn_egg",
+            SpawnEggItem::new, properties -> properties.spawnEgg(ModEntityTypes.RAN.get()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

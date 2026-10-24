@@ -5,6 +5,10 @@
   "block.plushie.stuffing_block": "Stuffing block",
 
   "itemGroup.plushieModTab": "Plushie Mod Tab",
-  "item.plushie.chonker_spawn_egg": "Chonker spawn egg"
 
+  "entity.plushie.iku": "Iku",
+  "item.plushie.iku_spawn_egg": "Iku spawn egg",
+
+  "entity.plushie.ran": "Ran",
+  "item.plushie.ran_spawn_egg": "Ran spawn egg"
 }

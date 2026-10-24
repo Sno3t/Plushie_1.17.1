@@ -28,13 +28,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ChonkerEntity extends Animal implements GeoEntity {
+// Shared by every Sukusuku plush mob; each one only differs in its entity type, model, texture and animation files.
+// Every Sukusuku animation file needs a looping "Moving" and "Idle" animation.
+public class SukusukuEntity extends Animal implements GeoEntity {
     private static final RawAnimation WALK = RawAnimation.begin().thenLoop("Moving");
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("Idle");
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public ChonkerEntity(EntityType<? extends Animal> entityType, Level level) {
+    public SukusukuEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
     }
 
@@ -68,7 +70,7 @@ public class ChonkerEntity extends Animal implements GeoEntity {
                 .build();
     }
 
-    private PlayState predicate(AnimationTest<ChonkerEntity> test) {
+    private PlayState predicate(AnimationTest<SukusukuEntity> test) {
         if (test.isMoving()) {
             return test.setAndContinue(WALK);
         }
