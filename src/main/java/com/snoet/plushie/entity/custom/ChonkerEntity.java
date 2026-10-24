@@ -29,8 +29,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ChonkerEntity extends Animal implements GeoEntity {
-    // "Moving" is the only animation in chonker.animation.json; when standing still the model just rests
     private static final RawAnimation WALK = RawAnimation.begin().thenLoop("Moving");
+    private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("Idle");
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
@@ -73,12 +73,13 @@ public class ChonkerEntity extends Animal implements GeoEntity {
             return test.setAndContinue(WALK);
         }
 
-        return PlayState.STOP;
+        return test.setAndContinue(IDLE);
     }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>("controller", 0, this::predicate));
+        // 5 ticks of blending so switching between walking and idling isn't a hard snap
+        controllers.add(new AnimationController<>("controller", 5, this::predicate));
     }
 
     @Override
