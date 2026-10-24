@@ -13,7 +13,7 @@ public class ModEntityTypes {
 
     public static final DeferredHolder<EntityType<?>, EntityType<ChonkerEntity>> CHONKER =
             ENTITY_TYPES.registerEntityType("chonker", ChonkerEntity::new, MobCategory.CREATURE,
-                    builder -> builder.sized(0.8f, 0.6f));
+                    builder -> builder.sized(0.8f, 0.8f));
 
 
     public static void register(IEventBus eventBus) {
